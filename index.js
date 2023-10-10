@@ -2,8 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const db = require('./config/Database');
-const router = require('./routes/index');
+const db = require('./src/config/Database');
+const router = require('./src/routes/index');
 
 dotenv.config();
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 const connect = async () => {
   try {
     await db.authenticate();
-    console.log('Database Connected...');
+    console.log('Database connected...');
   }
   catch (error) {
     console.error(error);
