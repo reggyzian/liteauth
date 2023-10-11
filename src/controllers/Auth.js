@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Users = require('../models/UserModel');
 
-const handShake = async (req, res) => {
+const token = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;
     if (!refreshToken) return res.sendStatus(401);
@@ -34,5 +34,5 @@ const handShake = async (req, res) => {
 };
 
 module.exports = {
-  handShake
+  token
 };
