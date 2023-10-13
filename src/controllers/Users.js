@@ -20,11 +20,25 @@ const register = async (req, res) => {
   const {
     name, email, password, passwordConfirm
   } = req.body;
-  if (password !== passwordConfirm) return res.status(400).json({ msg: 'Password and confirmation not match' });
-  const salt = await bcrypt.genSalt();
-  const passwordHash = await bcrypt.hash(password, salt);
 
   try {
+    const loadUser = await Users.findOne({
+      where: {
+        email
+      }
+    });
+
+    if (loadUser) {
+      return res.status(400).json({ msg: 'Email already exists' });
+    }
+
+    if (password !== passwordConfirm) {
+      return res.status(400).json({ msg: 'Password and confirmation do not match' });
+    }
+
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
+
     await Users.create({
       name,
       email,
